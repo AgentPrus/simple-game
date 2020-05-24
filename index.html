@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+      integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk"
+      crossorigin="anonymous"
+    />
+    <title>Vue Game</title>
+  </head>
+  <body>
+    <div id="app">
+      <div class="container mt-5">
+        <div class="row text-center">
+          <div class="col-6">
+            <h1 class="display3">You</h1>
+            <div class="progress mt-5">
+              <div
+                id="indicator"
+                class="progress-bar progress-bar-striped bg-success"
+                role="progressbar"
+                v-bind:style="{width: playerHealth + '%  '}"
+              >
+                {{ playerHealth }}
+              </div>
+            </div>
+          </div>
+
+          <div class="col-6">
+            <h1 class="display3">Monster</h1>
+            <div class="progress mt-5">
+              <div
+                id="indicator"
+                class="progress-bar progress-bar-striped bg-success"
+                role="progressbar"
+                v-bind:style="{width: monsterHealth + '%  '}"
+              >
+                {{ monsterHealth }}
+              </div>
+            </div>
+          </div>
+
+          <div
+            id="game-bar"
+            class="container mt-5 text-center shadow p-3 mb-5 bg-white rounded"
+          >
+            <template v-if="gameIsRunning">
+              <button
+                class="btn btn-danger mr-3"
+                @click="myAttack(); monsterAttack();"
+              >
+                Attack
+              </button>
+              <button
+                class="btn btn-warning mr-3"
+                @click="specialAttack(); monsterAttack();"
+              >
+                Special Attack
+              </button>
+              <button
+                class="btn btn-success mr-3"
+                @click="heal(); monsterAttack();"
+              >
+                Heal
+              </button>
+              <button class="btn btn-light" @click="quit">Give Up</button>
+            </template>
+            <template v-else>
+              <button class="btn btn-success btn-lg" @click="startGame">
+                Start Game
+              </button>
+            </template>
+          </div>
+          <!-- TODO: Show message when it's occurs -->
+          <div
+            v-if="msgsLog.length > 0"
+            class="container mt-5 text-center shadow p-3 mb-5 bg-white rounded"
+          >
+            <template v-for="(msg, index) in msgsLog">
+              <p v-bind:class="getMsgClass(index)">{{ msg }}</p>
+            </template>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="main.js"></script>
+  </body>
+</html>
